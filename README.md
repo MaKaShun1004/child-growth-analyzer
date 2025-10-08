@@ -7,9 +7,6 @@ python install_dependencies.py
 ```
 ## 2: 運行應用程序
 ```bash
-# 進入主應用目錄
 cd app
-
-# 運行Streamlit應用
 streamlit run app.py
 ```
