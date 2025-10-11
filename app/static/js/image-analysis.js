@@ -42,7 +42,17 @@ async function analyzeImage() {
     formData.append('age_group', ageGroup);
     
     const resultsContainer = document.getElementById('image-results');
-    resultsContainer.innerHTML = '<div class="loading"></div> AI正在分析圖片內容...';
+    resultsContainer.innerHTML = `
+        <div class="loading-container">
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="loading-message">AI正在分析圖片內容</div>
+            <div class="loading-submessage">識別活動類型並評估發展領域...</div>
+        </div>
+    `;
     
     try {
         const response = await fetch('/analyze_image', {

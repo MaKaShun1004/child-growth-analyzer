@@ -66,8 +66,18 @@ async function generateMilestoneReport() {
     const resultsContainer = document.getElementById('milestone-results');
     const generateBtn = document.getElementById('generate-milestone-report');
     
-    // 顯示載入動畫
-    resultsContainer.innerHTML = '<div class="info-box"><div class="loading"></div> 正在生成發展評估報告，請稍候...</div>';
+    // 顯示精美的載入動畫
+    resultsContainer.innerHTML = `
+        <div class="loading-container">
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="loading-message">正在生成發展評估報告</div>
+            <div class="loading-submessage">系統正在分析孩子的發展狀況，請稍候...</div>
+        </div>
+    `;
     generateBtn.disabled = true;
     
     // 收集已勾選的技能

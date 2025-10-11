@@ -42,8 +42,8 @@ pip install -r requirements.txt
 
 ### 2. 運行應用
 ```bash
-cd app
-python app.py
+cd app 
+python run.py
 ```
 
 ### 3. 訪問應用

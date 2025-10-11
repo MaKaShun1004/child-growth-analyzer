@@ -292,22 +292,67 @@ footer p {
     line-height: 1.8;
 }
 
-/* 加載動畫 */
-.loading {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(31, 119, 180, 0.3);
-    border-radius: 50%;
-    border-top-color: #1f77b4;
-    animation: spin 1s ease-in-out infinite;
+/* 加載動畫系統 */
+/* 三點跳動載入 */
+.loading-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     vertical-align: middle;
     margin-right: 10px;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+.loading-dots span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: #1f77b4;
+    border-radius: 50%;
+    animation: bounce 1.4s ease-in-out infinite;
 }
+
+.loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* 載入容器統一樣式 */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.loading-container .loading-message {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    color: #2e86ab;
+    font-weight: 500;
+}
+
+.loading-container .loading-submessage {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
 
 /* 滾動條樣式 */
 ::-webkit-scrollbar {
