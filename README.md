@@ -18,9 +18,15 @@ app/
 │   └── index.html        # 主頁面
 ├── static/               # 靜態資源
 │   ├── css/
-│   │   └── style.css     # 樣式表
+│   │   ├── main.css      # 主樣式表
+│   │   ├── milestone-assessment.css  # 發展評估樣式
+│   │   ├── image-analysis.css        # 圖片分析樣式
+│   │   └── growth-report.css         # 成長報告樣式
 │   └── js/
-│       └── main.js       # JavaScript邏輯
+│       ├── main.js       # JavaScript核心邏輯
+│       ├── milestone-assessment.js   # 發展評估功能
+│       ├── image-analysis.js         # 圖片分析功能
+│       └── growth-report.js          # 成長報告功能
 └── utils/                # 工具模組
     ├── ai_analyzer.py    # AI分析器
     ├── milestone_db.py   # 里程碑數據庫
