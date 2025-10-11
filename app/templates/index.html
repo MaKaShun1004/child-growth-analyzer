@@ -6,6 +6,9 @@
     <title>童伴成長 - 幼兒發展分析系統</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/milestone-assessment.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/image-analysis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/growth-report.css') }}">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
@@ -103,5 +106,8 @@
     </div>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/milestone-assessment.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/image-analysis.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/growth-report.js') }}"></script>
 </body>
 </html>

@@ -1,0 +1,158 @@
+/* 發展評估專用樣式 */
+
+/* 里程碑展開區塊 */
+.milestone-domain {
+    margin: 15px 0;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    background: white;
+}
+
+.milestone-domain:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.milestone-header {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1f77b4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+    user-select: none;
+}
+
+.milestone-header:hover {
+    background-color: #e9ecef;
+}
+
+.milestone-header .toggle-icon {
+    font-size: 0.9rem;
+    color: #666;
+    transition: transform 0.3s;
+    margin-left: 10px;
+}
+
+.milestone-content {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+}
+
+/* 領域進度指示器 */
+.domain-progress {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.mini-progress-bar-container {
+    background-color: #e9ecef;
+    border-radius: 8px;
+    height: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.mini-progress-bar {
+    height: 100%;
+    background-color: #ffc107;
+    border-radius: 8px;
+    transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+.milestone-skill {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.milestone-skill:hover {
+    background-color: #f8f9fa;
+    padding-left: 10px;
+    margin-left: -10px;
+    padding-right: 10px;
+    margin-right: -10px;
+    border-radius: 4px;
+}
+
+.milestone-skill:last-child {
+    border-bottom: none;
+}
+
+.milestone-skill label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    line-height: 1.6;
+    transition: color 0.2s;
+    flex: 1;
+}
+
+.milestone-skill label:hover {
+    color: #1f77b4;
+}
+
+.milestone-skill input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: #1f77b4;
+}
+
+/* 進度條 */
+.progress-item {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.progress-bar-container {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    height: 28px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #28a745;
+    border-radius: 10px;
+    transition: width 0.8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.progress-bar.medium {
+    background-color: #17a2b8;
+}
+
+.progress-bar.low {
+    background-color: #ffc107;
+}
