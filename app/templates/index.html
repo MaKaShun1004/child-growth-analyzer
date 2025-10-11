@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>童伴成長 - 幼兒發展分析系統</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👶</text></svg>">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 主標題 -->
+        <div class="main-header">👶 童伴成長 - 幼兒發展分析系統</div>
+        <div class="subtitle">🎯 為3-6歲兒童提供專業的發展評估與個性化成長建議</div>
+
+        <!-- 側邊欄 - 基本信息 -->
+        <div class="sidebar">
+            <h3>📋 孩子基本信息</h3>
+            <div class="form-group">
+                <label for="child_name">孩子姓名</label>
+                <input type="text" id="child_name" placeholder="請輸入孩子姓名">
+            </div>
+            <div class="form-group">
+                <label for="child_age">孩子年齡: <span id="age_display">4</span>歲</label>
+                <input type="range" id="child_age" min="3" max="6" value="4">
+            </div>
+            <div class="form-group">
+                <label for="child_gender">性別</label>
+                <select id="child_gender">
+                    <option value="男孩">男孩</option>
+                    <option value="女孩">女孩</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 主內容區域 -->
+        <div class="main-content">
+            <!-- 標籤頁導航 -->
+            <div class="tabs">
+                <button class="tab-button active" data-tab="milestone">📊 發展評估</button>
+                <button class="tab-button" data-tab="image">🖼️ 圖片分析</button>
+                <button class="tab-button" data-tab="report">📈 成長報告</button>
+            </div>
+
+            <!-- 發展評估標籤 -->
+            <div id="milestone-tab" class="tab-content active">
+                <h2>🎯 發展里程碑評估</h2>
+                
+                <div class="info-box" style="margin-bottom: 20px;">
+                    請根據孩子實際情況勾選已掌握的技能，系統將為您生成專業的發展評估報告
+                </div>
+                
+                <div id="milestone-assessment"></div>
+                
+                <button id="generate-milestone-report" class="btn-primary">📊 生成發展報告</button>
+                
+                <div id="milestone-results"></div>
+            </div>
+
+            <!-- 圖片分析標籤 -->
+            <div id="image-tab" class="tab-content">
+                <h2>🖼️ 圖片分析評估</h2>
+                
+                <div class="two-columns">
+                    <div class="column">
+                        <div class="upload-section">
+                            <label for="image-upload" class="upload-label">
+                                <div class="upload-placeholder">
+                                    <span>📸</span>
+                                    <p>點擊上傳孩子活動圖片</p>
+                                    <small>支援 PNG, JPG, JPEG 格式</small>
+                                </div>
+                            </label>
+                            <input type="file" id="image-upload" accept="image/png,image/jpeg,image/jpg" style="display: none;">
+                            <div id="image-preview"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="column">
+                        <button id="analyze-image-btn" class="btn-primary" disabled>🔍 分析圖片</button>
+                        <div id="image-results"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 成長報告標籤 -->
+            <div id="report-tab" class="tab-content">
+                <h2>📈 綜合成長報告</h2>
+                
+                <button id="generate-full-report" class="btn-primary">🎉 生成完整成長報告</button>
+                <div id="full-report"></div>
+            </div>
+        </div>
+
+        <!-- 頁腳 -->
+        <footer>
+            <h4>💡 溫馨提示</h4>
+            <p>本系統分析結果基於兒童發展里程碑和AI分析，僅供參考和教育目的使用。<br>
+            不能替代專業醫療、心理或教育評估。如有疑慮，請咨詢相關專業人士。</p>
+            <p>© 2025 童伴成長 - 幼兒發展分析系統</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
