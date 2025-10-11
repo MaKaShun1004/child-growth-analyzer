@@ -37,7 +37,7 @@ pip install -r requirements.txt
 ### 2. 運行應用
 ```bash
 cd app
-python flask_app.py
+python app.py
 ```
 
 ### 3. 訪問應用
@@ -121,10 +121,6 @@ python flask_app.py
 cd app
 python utils/test_core.py
 ```
-
-## 注意事項
-
-⚠️ **免責聲明**: 本系統分析結果僅供參考和教育目的使用，不能替代專業醫療、心理或教育評估。
 
 ## 更新日誌
 
