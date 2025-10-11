@@ -3,6 +3,12 @@
 // 生成完整報告
 async function generateFullReport() {
     const childName = document.getElementById('child_name').value || '寶寶';
+    const reportContainer = document.getElementById('full-report');
+    const generateBtn = document.getElementById('generate-full-report');
+    
+    // 顯示載入動畫
+    reportContainer.innerHTML = '<div class="info-box" style="text-align: center; padding: 3rem;"><div class="loading"></div> 正在生成完整成長報告，請稍候...</div>';
+    generateBtn.disabled = true;
     
     try {
         const response = await fetch('/generate_report', {
@@ -20,6 +26,10 @@ async function generateFullReport() {
         displayFullReport(report);
     } catch (error) {
         console.error('生成報告失敗:', error);
+        reportContainer.innerHTML = '<div class="warning-box" style="text-align: center; padding: 2rem;">❌ 生成報告失敗，請重試</div>';
+    } finally {
+        // 重新啟用按鈕，允許多次生成
+        generateBtn.disabled = false;
     }
 }
 

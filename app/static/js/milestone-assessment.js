@@ -63,6 +63,12 @@ function updateDomainProgress(domainDiv, domain, totalSkills) {
 // 生成里程碑報告
 async function generateMilestoneReport() {
     const childName = document.getElementById('child_name').value;
+    const resultsContainer = document.getElementById('milestone-results');
+    const generateBtn = document.getElementById('generate-milestone-report');
+    
+    // 顯示載入動畫
+    resultsContainer.innerHTML = '<div class="info-box"><div class="loading"></div> 正在生成發展評估報告，請稍候...</div>';
+    generateBtn.disabled = true;
     
     // 收集已勾選的技能
     const masteredSkills = {};
@@ -92,6 +98,10 @@ async function generateMilestoneReport() {
         displayMilestoneResults(result.progress_data, childName);
     } catch (error) {
         console.error('分析失敗:', error);
+        resultsContainer.innerHTML = '<div class="warning-box">❌ 生成報告失敗，請重試</div>';
+    } finally {
+        // 重新啟用按鈕，允許多次生成
+        generateBtn.disabled = false;
     }
 }
 
