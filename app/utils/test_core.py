@@ -113,7 +113,7 @@ def main():
         
         print("\n🎉 所有核心模塊測試完成！")
         print("\n📋 下一步:")
-        print("  1. 運行主應用: cd phase_3_main_app && streamlit run app.py")
+        print("  1. 運行主應用: cd app/utils/ && streamlit run app.py")
         print("  2. 訪問 http://localhost:8501 查看應用")
         
     except Exception as e:
