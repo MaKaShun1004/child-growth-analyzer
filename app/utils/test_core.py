@@ -6,8 +6,10 @@
 import sys
 import os
 
-# 添加當前目錄到 Python 路徑
-sys.path.append(os.path.dirname(__file__))
+# 添加應用根目錄到 Python 路徑
+APP_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+if APP_ROOT not in sys.path:
+    sys.path.insert(0, APP_ROOT)
 
 from utils.milestone_db import get_milestones_by_age, DEVELOPMENT_MILESTONES
 from utils.ai_analyzer import ChildGrowthAnalyzer
@@ -32,22 +34,6 @@ def test_ai_analyzer():
     print("\n=== 測試AI分析器 ===")
     
     analyzer = ChildGrowthAnalyzer()
-    
-    # 測試文字分析
-    print("\n📝 測試文字分析:")
-    test_texts = [
-        "孩子今天畫了一幅畫，還數數到20",
-        "寶寶在公園跑步跳躍，和其他小朋友分享玩具",
-        "孩子會自己穿衣服，還能講簡單的故事"
-    ]
-    
-    for i, text in enumerate(test_texts, 1):
-        print(f"\n  測試案例 {i}: '{text}'")
-        result = analyzer.analyze_text(text, "4-5歲")
-        
-        print(f"    檢測到的領域: {result['detected_domains']}")
-        print(f"    情感分析: {result['sentiment']}")
-        print(f"    建議: {result['suggestions'][:2]}")  # 只顯示前2個建議
     
     # 測試圖片分析（模擬）
     print("\n🖼️ 測試圖片分析功能:")

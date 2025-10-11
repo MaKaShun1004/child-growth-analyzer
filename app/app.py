@@ -3,7 +3,6 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from PIL import Image
-import io
 import sys
 import os
 
@@ -86,7 +85,7 @@ age_groups = {"3": "3-4歲", "4": "4-5歲", "5": "5-6歲"}
 age_group = age_groups.get(str(child_age), "3-4歲")
 
 # 主內容區域
-tab1, tab2, tab3, tab4 = st.tabs(["📊 發展評估", "🖼️ 圖片分析", "📝 文字記錄", "📈 成長報告"])
+tab1, tab2, tab3 = st.tabs(["📊 發展評估", "🖼️ 圖片分析", " 成長報告"])
 
 with tab1:
     st.header("🎯 發展里程碑評估")
@@ -230,44 +229,6 @@ with tab2:
                         analysis_placeholder.error(f"❌ {analysis_result['error']}")
 
 with tab3:
-    st.header("📝 文字記錄分析")
-    
-    text_input = st.text_area(
-        "請描述孩子的日常表現或特定行為:",
-        placeholder="例如：今天孩子畫了一幅家庭畫，有爸爸媽媽和自己，還能清楚描述每個人在做什麼...\n或者：孩子在公園和其他小朋友一起玩滑梯，懂得輪流等待...",
-        height=150,
-        help="詳細描述孩子的活動、語言、行為等表現"
-    )
-    
-    if st.button("📖 分析文字記錄", type="primary", use_container_width=True) and text_input:
-        with st.spinner("AI正在分析文字記錄..."):
-            analysis_result = analyzer.analyze_text(text_input, age_group)
-            
-            st.success("✅ 分析完成！")
-            
-            col1, col2 = st.columns([1, 1])
-            
-            with col1:
-                st.markdown("#### 🔍 檢測到的發展領域")
-                for domain in analysis_result["detected_domains"]:
-                    st.write(f"✓ {domain}")
-                
-                st.markdown("#### 😊 情感分析")
-                sentiment = analysis_result["sentiment"]
-                if sentiment == "positive":
-                    st.success("積極正向 👍")
-                else:
-                    st.info("中性正常 👌")
-            
-            with col2:
-                st.markdown("#### 📋 詳細分析")
-                st.markdown(f'<div class="info-box">{analysis_result["detailed_analysis"]}</div>', unsafe_allow_html=True)
-                
-                st.markdown("#### 🎯 活動建議")
-                for suggestion in analysis_result["suggestions"]:
-                    st.write(f"• {suggestion}")
-
-with tab4:
     st.header("📈 綜合成長報告")
     
     if st.button("🎉 生成完整成長報告", type="primary", use_container_width=True):
