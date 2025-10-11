@@ -6,8 +6,18 @@ async function generateFullReport() {
     const reportContainer = document.getElementById('full-report');
     const generateBtn = document.getElementById('generate-full-report');
     
-    // 顯示載入動畫
-    reportContainer.innerHTML = '<div class="info-box" style="text-align: center; padding: 3rem;"><div class="loading"></div> 正在生成完整成長報告，請稍候...</div>';
+    // 顯示三點跳動載入動畫
+    reportContainer.innerHTML = `
+        <div class="loading-container">
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="loading-message">正在生成完整成長報告</div>
+            <div class="loading-submessage">系統正在為 ${childName} 準備專屬成長方案...</div>
+        </div>
+    `;
     generateBtn.disabled = true;
     
     try {
