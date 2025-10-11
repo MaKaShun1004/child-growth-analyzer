@@ -1,4 +1,4 @@
-# 童伴成長 - 幼兒發展分析系統 (Flask版本)
+# 童伴成長 - 幼兒發展分析系統
 
 ## 專案簡介
 為3-6歲兒童提供專業的發展評估與個性化成長建議的Web應用系統。
@@ -68,40 +68,6 @@ python run.py
 - 興趣班選擇建議
 - 節費建議
 
-## API端點
-
-### POST /get_milestones
-獲取指定年齡的里程碑數據
-```json
-{
-  "age": 4
-}
-```
-
-### POST /analyze_milestones
-分析里程碑掌握情況
-```json
-{
-  "age": 4,
-  "mastered_skills": {
-    "大運動": ["能單腳跳躍"],
-    "精細動作": ["能畫出簡單的人像"]
-  }
-}
-```
-
-### POST /analyze_image
-分析上傳的圖片
-- 表單數據: image (文件), age_group (字符串)
-
-### POST /generate_report
-生成綜合成長報告
-```json
-{
-  "child_name": "小明",
-  "child_age": 4
-}
-```
 
 ## 開發說明
 
