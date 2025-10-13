@@ -51,21 +51,12 @@
     transition: background-color 0.2s;
 }
 
-.likert-question:hover {
-    background-color: #f8f9fa;
-    padding-left: 15px;
-    padding-right: 15px;
-    margin-left: -15px;
-    margin-right: -15px;
-    border-radius: 8px;
-}
-
 .likert-question:last-child {
     border-bottom: none;
 }
 
 .question-text {
-    font-size: 1rem;
+    font-size: 1.5rem;
     color: #333;
     margin-bottom: 15px;
     font-weight: 500;
@@ -87,22 +78,26 @@
 }
 
 .left-label {
-    color: #9333ea; /* 紫色 */
+    color: #22c55e; /* 綠色 - 做到 */
 }
 
 .right-label {
-    color: #22c55e; /* 綠色 */
+    color: #9333ea; /* 紫色 - 做不到 */
 }
 
 .likert-options {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     justify-content: center;
+    align-items: center;
     flex: 1;
 }
 
 .likert-option {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .likert-option input[type="radio"] {
@@ -117,16 +112,42 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    min-width: 80px;
+    min-height: 80px;
 }
 
 .circle {
-    width: 36px;
-    height: 36px;
     border-radius: 50%;
     border: 3px solid #d1d5db;
     background-color: white;
     transition: all 0.3s ease;
     position: relative;
+}
+
+/* 根據分數等比例設置圓圈大小 - 確保中軸線對齊 */
+.circle-label.score-1 .circle {
+    width: 62px;
+    height: 62px;
+}
+
+.circle-label.score-2 .circle {
+    width: 54px;
+    height: 54px;
+}
+
+.circle-label.score-3 .circle {
+    width: 46px;
+    height: 46px;
+}
+
+.circle-label.score-4 .circle {
+    width: 54px;
+    height: 54px;
+}
+
+.circle-label.score-5 .circle {
+    width: 62px;
+    height: 62px;
 }
 
 /* 分數 1-2：紫色（做不到） */
@@ -189,18 +210,7 @@
     box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
 }
 
-/* 選中後的內部圓點 */
-.likert-option input[type="radio"]:checked + .circle-label .circle::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: white;
-}
+
 
 /* 響應式設計 - Likert Scale */
 @media (max-width: 768px) {
@@ -221,16 +231,42 @@
     
     .likert-options {
         order: 2;
-        gap: 15px;
+        gap: 18px;
     }
     
     .right-label {
         order: 3;
     }
     
-    .circle {
-        width: 44px;
-        height: 44px;
+    /* 移動設備上調整圓圈大小 - 保持中軸線對齊 */
+    .circle-label {
+        min-width: 62px;
+        min-height: 62px;
+    }
+    
+    .circle-label.score-1 .circle {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .circle-label.score-2 .circle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .circle-label.score-3 .circle {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .circle-label.score-4 .circle {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .circle-label.score-5 .circle {
+        width: 64px;
+        height: 64px;
     }
 }
 

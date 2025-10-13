@@ -1,6 +1,6 @@
 // 發展評估專用功能
 
-// 顯示合併的里程碑評估界面
+// 顯示 Likert Scale 問卷評估界面
 function displayMilestoneAssessment(milestones) {
     const container = document.getElementById('milestone-assessment');
     container.innerHTML = '';
@@ -23,24 +23,67 @@ function displayMilestoneAssessment(milestones) {
         content.className = 'milestone-content';
         content.style.display = 'block';
         
-        // 添加技能列表
+        // 添加 Likert Scale 問卷
         skills.forEach((skill, index) => {
-            const skillDiv = document.createElement('div');
-            skillDiv.className = 'milestone-skill';
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'likert-question';
             
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = `check_${domain}_${skill}`;
-            checkbox.value = skill;
-            checkbox.dataset.domain = domain;
+            // 問題文字
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.textContent = skill;
+            questionDiv.appendChild(questionText);
             
-            const label = document.createElement('label');
-            label.htmlFor = checkbox.id;
-            label.textContent = skill;
+            // Likert Scale (1-5分制)
+            const scaleDiv = document.createElement('div');
+            scaleDiv.className = 'likert-scale';
             
-            skillDiv.appendChild(checkbox);
-            skillDiv.appendChild(label);
-            content.appendChild(skillDiv);
+            // 左側標籤 (做到)
+            const leftLabel = document.createElement('div');
+            leftLabel.className = 'scale-label left-label';
+            leftLabel.textContent = '做到';
+            scaleDiv.appendChild(leftLabel);
+            
+            // 選項容器
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'likert-options';
+            
+            // 創建 5 個選項，從右到左 (5=強烈同意, 4=同意, 3=中立, 2=不同意, 1=強烈不同意)
+            for (let score = 5; score >= 1; score--) {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'likert-option';
+                
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `question_${domain}_${index}`;
+                radio.value = score;
+                radio.id = `radio_${domain}_${index}_${score}`;
+                radio.dataset.domain = domain;
+                radio.dataset.skill = skill;
+                
+                const label = document.createElement('label');
+                label.htmlFor = radio.id;
+                label.className = `circle-label score-${score}`;
+                
+                const circle = document.createElement('span');
+                circle.className = 'circle';
+                
+                label.appendChild(circle);
+                optionDiv.appendChild(radio);
+                optionDiv.appendChild(label);
+                optionsDiv.appendChild(optionDiv);
+            }
+            
+            scaleDiv.appendChild(optionsDiv);
+            
+            // 右側標籤 (做不到)
+            const rightLabel = document.createElement('div');
+            rightLabel.className = 'scale-label right-label';
+            rightLabel.textContent = '做不到';
+            scaleDiv.appendChild(rightLabel);
+            
+            questionDiv.appendChild(scaleDiv);
+            content.appendChild(questionDiv);
         });
         
         header.addEventListener('click', () => {
@@ -80,16 +123,22 @@ async function generateMilestoneReport() {
     `;
     generateBtn.disabled = true;
     
-    // 收集已勾選的技能
-    const masteredSkills = {};
-    const checkboxes = document.querySelectorAll('#milestone-assessment input[type="checkbox"]:checked');
+    // 收集所有 Likert Scale 評分
+    const skillScores = {};
+    const radios = document.querySelectorAll('#milestone-assessment input[type="radio"]:checked');
     
-    checkboxes.forEach(checkbox => {
-        const domain = checkbox.dataset.domain;
-        if (!masteredSkills[domain]) {
-            masteredSkills[domain] = [];
+    radios.forEach(radio => {
+        const domain = radio.dataset.domain;
+        const skill = radio.dataset.skill;
+        const score = parseInt(radio.value);
+        
+        if (!skillScores[domain]) {
+            skillScores[domain] = [];
         }
-        masteredSkills[domain].push(checkbox.value);
+        skillScores[domain].push({
+            skill: skill,
+            score: score
+        });
     });
     
     try {
@@ -100,7 +149,7 @@ async function generateMilestoneReport() {
             },
             body: JSON.stringify({
                 age: currentAge,
-                mastered_skills: masteredSkills
+                skill_scores: skillScores
             })
         });
         
@@ -136,16 +185,18 @@ function displayMilestoneResults(progressData, childName) {
         const progressDiv = document.createElement('div');
         progressDiv.className = 'progress-item';
         
-        const percentage = data['掌握程度'];
+        const score = data['平均分數'];
+        const percentage = data['達成度'];
         let statusClass = 'success-box';
         let statusText = '';
         let barClass = '';
         
-        if (percentage >= 80) {
+        // 根據平均分數判斷發展狀態
+        if (score >= 4) {
             statusClass = 'success-box';
             statusText = '發展優秀';
             barClass = '';
-        } else if (percentage >= 60) {
+        } else if (score >= 3) {
             statusClass = 'info-box';
             statusText = '發展良好';
             barClass = 'medium';
@@ -157,7 +208,7 @@ function displayMilestoneResults(progressData, childName) {
         
         const statusBox = document.createElement('div');
         statusBox.className = statusClass;
-        statusBox.innerHTML = `<strong>${data['領域']}</strong>: ${data['已掌握技能']}/${data['總技能數']} (${percentage}%) - ${statusText}`;
+        statusBox.innerHTML = `<strong>${data['領域']}</strong>: 平均分數 ${score.toFixed(2)}/5.0 (達成度 ${percentage}%) - ${statusText}`;
         
         const progressBarContainer = document.createElement('div');
         progressBarContainer.className = 'progress-bar-container';
@@ -180,16 +231,19 @@ function displayMilestoneResults(progressData, childName) {
     container.appendChild(suggestionsHeader);
     
     progressData.forEach(data => {
-        const percentage = data['掌握程度'];
+        const score = data['平均分數'];
         let suggestion = '';
         let boxClass = '';
         
-        if (percentage < 60) {
+        if (score < 3) {
             boxClass = 'warning-box';
             suggestion = `🚩 <strong>${data['領域']}需要加強</strong><br>建議多進行相關活動訓練，促進技能發展`;
-        } else if (percentage > 85) {
+        } else if (score >= 4.5) {
             boxClass = 'success-box';
             suggestion = `✅ <strong>${data['領域']}發展優秀</strong><br>請保持並繼續挑戰更高難度的活動`;
+        } else if (score >= 4) {
+            boxClass = 'success-box';
+            suggestion = `👍 <strong>${data['領域']}發展優秀</strong><br>保持良好的發展勢頭`;
         } else {
             boxClass = 'info-box';
             suggestion = `💪 <strong>${data['領域']}發展良好</strong><br>繼續保持當前的發展節奏`;
