@@ -44,6 +44,196 @@
     border-top: 1px solid #e9ecef;
 }
 
+/* Likert Scale 問卷樣式 */
+.likert-question {
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.likert-question:hover {
+    background-color: #f8f9fa;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: -15px;
+    margin-right: -15px;
+    border-radius: 8px;
+}
+
+.likert-question:last-child {
+    border-bottom: none;
+}
+
+.question-text {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.likert-scale {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.scale-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+}
+
+.left-label {
+    color: #9333ea; /* 紫色 */
+}
+
+.right-label {
+    color: #22c55e; /* 綠色 */
+}
+
+.likert-options {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex: 1;
+}
+
+.likert-option {
+    position: relative;
+}
+
+.likert-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.circle-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 3px solid #d1d5db;
+    background-color: white;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* 分數 1-2：紫色（做不到） */
+.circle-label.score-1 .circle,
+.circle-label.score-2 .circle {
+    border-color: #e9d5ff;
+}
+
+.circle-label.score-1:hover .circle,
+.circle-label.score-2:hover .circle {
+    border-color: #9333ea;
+    background-color: #f3e8ff;
+    transform: scale(1.15);
+}
+
+.likert-option input[type="radio"]:checked + .circle-label.score-1 .circle,
+.likert-option input[type="radio"]:checked + .circle-label.score-2 .circle {
+    border-color: #9333ea;
+    background-color: #9333ea;
+    transform: scale(1.2);
+    box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.2);
+}
+
+/* 分數 3：灰色（中立） */
+.circle-label.score-3 .circle {
+    border-color: #d1d5db;
+}
+
+.circle-label.score-3:hover .circle {
+    border-color: #6b7280;
+    background-color: #f3f4f6;
+    transform: scale(1.15);
+}
+
+.likert-option input[type="radio"]:checked + .circle-label.score-3 .circle {
+    border-color: #6b7280;
+    background-color: #6b7280;
+    transform: scale(1.2);
+    box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.2);
+}
+
+/* 分數 4-5：綠色（做到） */
+.circle-label.score-4 .circle,
+.circle-label.score-5 .circle {
+    border-color: #bbf7d0;
+}
+
+.circle-label.score-4:hover .circle,
+.circle-label.score-5:hover .circle {
+    border-color: #22c55e;
+    background-color: #dcfce7;
+    transform: scale(1.15);
+}
+
+.likert-option input[type="radio"]:checked + .circle-label.score-4 .circle,
+.likert-option input[type="radio"]:checked + .circle-label.score-5 .circle {
+    border-color: #22c55e;
+    background-color: #22c55e;
+    transform: scale(1.2);
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+}
+
+/* 選中後的內部圓點 */
+.likert-option input[type="radio"]:checked + .circle-label .circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+/* 響應式設計 - Likert Scale */
+@media (max-width: 768px) {
+    .likert-scale {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .scale-label {
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+    }
+    
+    .left-label {
+        order: 1;
+    }
+    
+    .likert-options {
+        order: 2;
+        gap: 15px;
+    }
+    
+    .right-label {
+        order: 3;
+    }
+    
+    .circle {
+        width: 44px;
+        height: 44px;
+    }
+}
+
 /* 領域進度指示器 */
 .domain-progress {
     padding: 15px;
