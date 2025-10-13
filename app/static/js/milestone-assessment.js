@@ -48,7 +48,7 @@ function displayMilestoneAssessment(milestones) {
             const optionsDiv = document.createElement('div');
             optionsDiv.className = 'likert-options';
             
-            // 創建 5 個選項，從右到左 (5=強烈同意, 4=同意, 3=中立, 2=不同意, 1=強烈不同意)
+            // 創建 5 個選項，從右到左 (5=強烈同意, 4=同意, 3=中立/不適用, 2=不同意, 1=強烈不同意)
             for (let score = 5; score >= 1; score--) {
                 const optionDiv = document.createElement('div');
                 optionDiv.className = 'likert-option';
@@ -56,7 +56,8 @@ function displayMilestoneAssessment(milestones) {
                 const radio = document.createElement('input');
                 radio.type = 'radio';
                 radio.name = `question_${domain}_${index}`;
-                radio.value = score;
+                // 中立選項 (score=3) 使用特殊值 'N/A'
+                radio.value = score === 3 ? 'N/A' : score;
                 radio.id = `radio_${domain}_${index}_${score}`;
                 radio.dataset.domain = domain;
                 radio.dataset.skill = skill;
@@ -130,15 +131,20 @@ async function generateMilestoneReport() {
     radios.forEach(radio => {
         const domain = radio.dataset.domain;
         const skill = radio.dataset.skill;
-        const score = parseInt(radio.value);
+        const value = radio.value;
         
-        if (!skillScores[domain]) {
-            skillScores[domain] = [];
+        // 只收集有效分數，跳過 'N/A' (中立/不適用)
+        if (value !== 'N/A') {
+            const score = parseInt(value);
+            
+            if (!skillScores[domain]) {
+                skillScores[domain] = [];
+            }
+            skillScores[domain].push({
+                skill: skill,
+                score: score
+            });
         }
-        skillScores[domain].push({
-            skill: skill,
-            score: score
-        });
     });
     
     try {
@@ -185,18 +191,19 @@ function displayMilestoneResults(progressData, childName) {
         const progressDiv = document.createElement('div');
         progressDiv.className = 'progress-item';
         
-        const score = data['平均分數'];
+        const totalScore = data['總分'];
+        const maxScore = data['最高分'];
         const percentage = data['達成度'];
         let statusClass = 'success-box';
         let statusText = '';
         let barClass = '';
         
-        // 根據平均分數判斷發展狀態
-        if (score >= 4) {
+        // 根據達成度判斷發展狀態
+        if (percentage >= 80) {
             statusClass = 'success-box';
             statusText = '發展優秀';
             barClass = '';
-        } else if (score >= 3) {
+        } else if (percentage >= 60) {
             statusClass = 'info-box';
             statusText = '發展良好';
             barClass = 'medium';
@@ -208,7 +215,7 @@ function displayMilestoneResults(progressData, childName) {
         
         const statusBox = document.createElement('div');
         statusBox.className = statusClass;
-        statusBox.innerHTML = `<strong>${data['領域']}</strong>: 平均分數 ${score.toFixed(2)}/5.0 (達成度 ${percentage}%) - ${statusText}`;
+        statusBox.innerHTML = `<strong>${data['領域']}</strong>: 總分 ${totalScore}/${maxScore} (達成度 ${percentage}%) - ${statusText}`;
         
         const progressBarContainer = document.createElement('div');
         progressBarContainer.className = 'progress-bar-container';
@@ -231,17 +238,17 @@ function displayMilestoneResults(progressData, childName) {
     container.appendChild(suggestionsHeader);
     
     progressData.forEach(data => {
-        const score = data['平均分數'];
+        const percentage = data['達成度'];
         let suggestion = '';
         let boxClass = '';
         
-        if (score < 3) {
+        if (percentage < 60) {
             boxClass = 'warning-box';
             suggestion = `🚩 <strong>${data['領域']}需要加強</strong><br>建議多進行相關活動訓練，促進技能發展`;
-        } else if (score >= 4.5) {
+        } else if (percentage >= 90) {
             boxClass = 'success-box';
             suggestion = `✅ <strong>${data['領域']}發展優秀</strong><br>請保持並繼續挑戰更高難度的活動`;
-        } else if (score >= 4) {
+        } else if (percentage >= 80) {
             boxClass = 'success-box';
             suggestion = `👍 <strong>${data['領域']}發展優秀</strong><br>保持良好的發展勢頭`;
         } else {

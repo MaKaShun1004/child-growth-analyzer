@@ -27,7 +27,7 @@ def register_routes(app):
 
     @app.route('/analyze_milestones', methods=['POST'])
     def analyze_milestones():
-        """分析里程碑掌握情況 - 使用 Likert Scale 評分"""
+        """分析里程碑掌握情況 - 使用 Likert Scale 評分，計算總分，排除中立/不適用選項"""
         data = request.json
         age = int(data.get('age', 4))
         skill_scores = data.get('skill_scores', {})
@@ -36,30 +36,34 @@ def register_routes(app):
         progress_data = []
         
         for domain, skills in milestones.items():
-            # 獲取該領域的所有評分
+            # 獲取該領域的所有評分（已排除 N/A）
             domain_scores = skill_scores.get(domain, [])
             
             if len(domain_scores) > 0:
-                # 計算平均分數
+                # 計算總分數（只計算有效分數，不包含中立/不適用）
                 total_score = sum(item['score'] for item in domain_scores)
-                avg_score = total_score / len(domain_scores)
                 
-                # 計算達成度百分比 (基於5分制轉換為百分比)
-                achievement_percentage = (avg_score / 5.0) * 100
+                # 計算最大可能分數（有效評估數 × 5）
+                max_possible_score = len(domain_scores) * 5
+                
+                # 計算達成度百分比
+                achievement_percentage = (total_score / max_possible_score) * 100 if max_possible_score > 0 else 0
                 
                 # 計算評估技能數和總技能數
                 assessed_count = len(domain_scores)
                 total_count = len(skills)
             else:
-                # 如果該領域沒有評分，設為0
-                avg_score = 0
+                # 如果該領域沒有有效評分（全部為 N/A 或未評分），設為0
+                total_score = 0
+                max_possible_score = 0
                 achievement_percentage = 0
                 assessed_count = 0
                 total_count = len(skills)
             
             progress_data.append({
                 "領域": domain,
-                "平均分數": round(avg_score, 2),
+                "總分": total_score,
+                "最高分": max_possible_score,
                 "達成度": round(achievement_percentage, 1),
                 "已評估技能": assessed_count,
                 "總技能數": total_count
