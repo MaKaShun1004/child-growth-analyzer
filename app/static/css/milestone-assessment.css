@@ -1,0 +1,378 @@
+/* 發展評估專用樣式 */
+
+/* 里程碑展開區塊 */
+.milestone-domain {
+    margin: 15px 0;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    background: white;
+}
+
+.milestone-domain:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.milestone-header {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #1f77b4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+    user-select: none;
+}
+
+.milestone-header:hover {
+    background-color: #e9ecef;
+}
+
+.milestone-header .toggle-icon {
+    font-size: 0.9rem;
+    color: #666;
+    transition: transform 0.3s;
+    margin-left: 10px;
+}
+
+.milestone-content {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #e9ecef;
+}
+
+/* Likert Scale 問卷樣式 */
+.likert-question {
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.likert-question:last-child {
+    border-bottom: none;
+}
+
+.question-text {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.likert-scale {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.scale-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    white-space: nowrap;
+}
+
+.left-label {
+    color: #22c55e; /* 綠色 - 做到 */
+}
+
+.right-label {
+    color: #9333ea; /* 紫色 - 做不到 */
+}
+
+.likert-options {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.likert-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.likert-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.circle-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 80px;
+    min-height: 80px;
+}
+
+.circle {
+    border-radius: 50%;
+    border: 3px solid #d1d5db;
+    background-color: white;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* 根據分數等比例設置圓圈大小 - 確保中軸線對齊 */
+.circle-label.score-1 .circle {
+    width: 62px;
+    height: 62px;
+}
+
+.circle-label.score-2 .circle {
+    width: 52px;
+    height: 54px;
+}
+
+.circle-label.score-3 .circle {
+    width: 42px;
+    height: 42px;
+}
+
+.circle-label.score-4 .circle {
+    width: 52px;
+    height: 52px;
+}
+
+.circle-label.score-5 .circle {
+    width: 62px;
+    height: 62px;
+}
+
+/* 分數 1-2：紫色（做不到） */
+.circle-label.score-1 .circle,
+.circle-label.score-2 .circle {
+    border-color: #e9d5ff;
+}
+
+.circle-label.score-1:hover .circle,
+.circle-label.score-2:hover .circle {
+    border-color: #9333ea;
+    background-color: #f3e8ff;
+}
+
+.likert-option input[type="radio"]:checked + .circle-label.score-1 .circle,
+.likert-option input[type="radio"]:checked + .circle-label.score-2 .circle {
+    border-color: #9333ea;
+    background-color: #9333ea;
+    box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.2);
+}
+
+/* 分數 3：灰色（中立） */
+.circle-label.score-3 .circle {
+    border-color: #d1d5db;
+}
+
+.circle-label.score-3:hover .circle {
+    border-color: #6b7280;
+    background-color: #f3f4f6;
+}
+
+.likert-option input[type="radio"]:checked + .circle-label.score-3 .circle {
+    border-color: #6b7280;
+    background-color: #6b7280;
+    box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.2);
+}
+
+/* 分數 4-5：綠色（做到） */
+.circle-label.score-4 .circle,
+.circle-label.score-5 .circle {
+    border-color: #bbf7d0;
+}
+
+.circle-label.score-4:hover .circle,
+.circle-label.score-5:hover .circle {
+    border-color: #22c55e;
+    background-color: #dcfce7;
+}
+
+.likert-option input[type="radio"]:checked + .circle-label.score-4 .circle,
+.likert-option input[type="radio"]:checked + .circle-label.score-5 .circle {
+    border-color: #22c55e;
+    background-color: #22c55e;
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+}
+
+
+
+/* 響應式設計 - Likert Scale */
+@media (max-width: 768px) {
+    .likert-scale {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .scale-label {
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+    }
+    
+    .left-label {
+        order: 1;
+    }
+    
+    .likert-options {
+        order: 2;
+        gap: 18px;
+    }
+    
+    .right-label {
+        order: 3;
+    }
+    
+    /* 移動設備上調整圓圈大小 - 保持中軸線對齊 */
+    .circle-label {
+        min-width: 62px;
+        min-height: 62px;
+    }
+    
+    .circle-label.score-1 .circle {
+        width: 64px;
+        height: 64px;
+    }
+    
+    .circle-label.score-2 .circle {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .circle-label.score-3 .circle {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .circle-label.score-4 .circle {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .circle-label.score-5 .circle {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+/* 領域進度指示器 */
+.domain-progress {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.mini-progress-bar-container {
+    background-color: #e9ecef;
+    border-radius: 8px;
+    height: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.mini-progress-bar {
+    height: 100%;
+    background-color: #ffc107;
+    border-radius: 8px;
+    transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+.milestone-skill {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.milestone-skill:hover {
+    background-color: #f8f9fa;
+    padding-left: 10px;
+    margin-left: -10px;
+    padding-right: 10px;
+    margin-right: -10px;
+    border-radius: 4px;
+}
+
+.milestone-skill:last-child {
+    border-bottom: none;
+}
+
+.milestone-skill label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    line-height: 1.6;
+    transition: color 0.2s;
+    flex: 1;
+}
+
+.milestone-skill label:hover {
+    color: #1f77b4;
+}
+
+.milestone-skill input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: #1f77b4;
+}
+
+/* 進度條 */
+.progress-item {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.progress-bar-container {
+    background-color: #e9ecef;
+    border-radius: 10px;
+    height: 28px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #28a745;
+    border-radius: 10px;
+    transition: width 0.8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.progress-bar.medium {
+    background-color: #17a2b8;
+}
+
+.progress-bar.low {
+    background-color: #ffc107;
+}

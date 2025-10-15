@@ -1,0 +1,162 @@
+/* 圖片分析專用樣式 */
+
+/* 圖片上傳 */
+.upload-section {
+    text-align: center;
+}
+
+.upload-label {
+    display: block;
+    border: 2px dashed #1f77b4;
+    border-radius: 10px;
+    padding: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: #f8f9fa;
+}
+
+.upload-label:hover {
+    background-color: #f0f8ff;
+    border-color: #155a8a;
+    transform: scale(1.02);
+}
+
+.upload-placeholder span {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.upload-placeholder p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    color: #1f77b4;
+    font-weight: 500;
+}
+
+.upload-placeholder small {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+#image-preview {
+    margin-top: 20px;
+}
+
+#image-preview img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s;
+}
+
+#image-preview img:hover {
+    transform: scale(1.02);
+}
+
+#image-preview p {
+    margin-top: 10px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* 圖片分析結果 */
+.activity-list {
+    margin: 20px 0;
+    list-style: none;
+    padding: 0;
+}
+
+.activity-list li {
+    padding: 10px;
+    margin: 5px 0;
+    border-bottom: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.activity-list li:hover {
+    background-color: #e9ecef;
+}
+
+.assessment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.assessment-table th,
+.assessment-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.assessment-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #1f77b4;
+    font-size: 0.95rem;
+}
+
+.assessment-table tr:last-child td {
+    border-bottom: none;
+}
+
+.assessment-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* 雷達圖 */
+#radar-chart {
+    margin: 20px 0;
+    height: 400px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* 建議列表 */
+.recommendation-list {
+    margin: 20px 0;
+    padding-left: 20px;
+    counter-reset: recommendation-counter;
+}
+
+.recommendation-list li {
+    padding: 12px 15px;
+    margin: 10px 0;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border-left: 4px solid #1f77b4;
+    list-style: none;
+    counter-increment: recommendation-counter;
+    transition: all 0.3s;
+}
+
+.recommendation-list li:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+}
+
+.recommendation-list li:before {
+    content: counter(recommendation-counter) ". ";
+    font-weight: 600;
+    color: #1f77b4;
+    margin-right: 8px;
+}
+
+/* 響應式設計 - 圖片分析 */
+@media (max-width: 480px) {
+    .upload-label {
+        padding: 30px 20px;
+    }
+    
+    .upload-placeholder span {
+        font-size: 2rem;
+    }
+}

@@ -60,35 +60,6 @@ class ChildGrowthAnalyzer:
         except Exception as e:
             return {"error": f"圖片分析失敗: {str(e)}"}
     
-    def analyze_text(self, text_description, age_group):
-        """分析文字描述"""
-        # 關鍵詞映射
-        keyword_domains = {
-            "畫畫": "精細動作", "塗顏色": "精細動作", "寫字": "精細動作",
-            "跑步": "大運動", "跳躍": "大運動", "打球": "大運動",
-            "數數": "認知能力", "認字": "認知能力", "拼圖": "認知能力",
-            "說話": "語言能力", "講故事": "語言能力", "問問題": "語言能力",
-            "分享": "社交情感", "合作": "社交情感", "幫助": "社交情感"
-        }
-        
-        detected_domains = []
-        for keyword, domain in keyword_domains.items():
-            if keyword in text_description:
-                detected_domains.append(domain)
-        
-        # 確保至少檢測到一些領域
-        if not detected_domains:
-            detected_domains = ["精細動作", "認知能力"]  # 默認值
-        
-        analysis = {
-            "detected_domains": list(set(detected_domains)),
-            "sentiment": "positive" if len(detected_domains) >= 2 else "neutral",
-            "detailed_analysis": self._generate_text_analysis(text_description, age_group, detected_domains),
-            "suggestions": self._generate_text_suggestions(detected_domains)
-        }
-        
-        return analysis
-    
     def _generate_domain_comment(self, domain, score, age_group):
         """生成領域評語"""
         comments = {
@@ -170,11 +141,6 @@ class ChildGrowthAnalyzer:
             recommendations.append(random.choice(all_recs))
         
         return list(set(recommendations))[:5]
-    
-    def _generate_text_analysis(self, text, age_group, domains):
-        """生成文字分析"""
-        domain_str = "、".join(domains)
-        return f"根據描述，孩子在{domain_str}方面表現出{age_group}年齡段的發展特徵。建議繼續提供豐富的學習環境，鼓勵多元發展。"
     
     def _generate_text_suggestions(self, domains):
         """基於檢測領域生成建議"""
